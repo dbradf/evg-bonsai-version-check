@@ -1,0 +1,4 @@
+bonsai_pots:
+  - name: version-check
+    path: bonsai/version-check.pot.yml
+    description: Ensure changes to not conflict with published changes.

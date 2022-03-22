@@ -1,0 +1,22 @@
+name: version-check
+functions:
+  run:
+    description: Check that version and changelog have been updated.
+    params:
+      - name: target_dir
+        description: Directory to execute check in.
+      - name: package_type
+        description: Type of package being published [python-poetry, rust].
+      - name: publish_type
+        description: When packages are being published [pypi, github-release].
+    actions:
+      - command: shell.exec
+        params:
+          script: |
+            set -o errexit
+
+            if [ "${is_patch}" = "true" ]; then
+              wget -q https://github.com/dbradf/pypi-version-check/releases/download/v0.3.0/pypi-version-check
+              chmod +x pypi-version-check
+              ./pypi-version-check --package-type ${package_type} --publish-type ${publish_type} --project-path ${target_dir} --check-changelog
+            fi
